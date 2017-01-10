@@ -6,10 +6,9 @@ var clear       = require('clear');
 var CLI         = require('clui');
 var figlet      = require('figlet');
 var inquirer    = require('inquirer');
- 
 var Twitter = require('twitter');
 var params = {screen_name: 'nodejs'};
-
+//twitter api credentials
 var client = new Twitter({
   consumer_key: 'Mo94pyhnqO33JppwZHPS3YEX7',
   consumer_secret: 'Cqf9tqlGiJCnUcNJLuewwP9ULoYjqoMm3Nh2ngcsemmUuHUYxd',
@@ -24,13 +23,13 @@ console.log(
   )
 );
 
-
+//function to get tweet messages
 function getTweetMessage(callback) {
   var questions = [
     {
       name: 'message',
       type: 'input',
-      message: 'Enter a tweet to be posted (as @Genny021):',
+      message: 'Enter a tweet to be posted (as @Chiomaike):',
       validate: function( value ) {
         if (value.length) {
           return true;
@@ -44,9 +43,11 @@ function getTweetMessage(callback) {
 
   inquirer.prompt(questions).then(callback);
  }
+ //client tweet post
 getTweetMessage(function(){
   var new_message = arguments[0].message;
   client.post('statuses/update', {status: new_message},  function(error, tweet, response) {
+	  //checking for tweet status, if successful else throw error
   if(error) throw error;
   console.log("Tweet successful"); 
 }); 
